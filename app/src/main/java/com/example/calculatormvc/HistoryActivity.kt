@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.calculatormvc.ui.theme.CalculatorMVCTheme
 
-class MainActivity : ComponentActivity() {
+class HistoryActivity : ComponentActivity() {
     private val CalcModel = CalculatorModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_history)
         //get input from UI
         val num1 = findViewById<EditText>(R.id.editTextNumber)
         val num2 = findViewById<EditText>(R.id.editTextNumber2)
@@ -32,8 +32,7 @@ class MainActivity : ComponentActivity() {
         val btnDivide = findViewById<Button>(R.id.divide_button)
         val btnClear = findViewById<Button>(R.id.clear_button)
         val answer = findViewById<TextView>(R.id.textViewAnswer)
-        val btnHistory = findViewById<Button>(R.id.buttonHistory)
-        val intent= Intent(packageContext = th
+
 
 
         btnAdd.setOnClickListener {

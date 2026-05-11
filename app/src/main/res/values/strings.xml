@@ -9,4 +9,6 @@
     <string name="Divide">/</string>
     <string name="Clear">CLEAR</string>
     <string name="Result">0.0</string>
+    <string name="calculator_button">Calculator Button</string>
+    <string name="history_button">History</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.calculatormvc
 
 import Models.CalculatorModel
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -18,14 +19,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.calculatormvc.ui.theme.CalculatorMVCTheme
 
 class MainActivity : ComponentActivity() {
-    private val CalcModel = CalculatorModel()
+    //private val CalcModel = CalculatorModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         //get input from UI
-        val num1 = findViewById<EditText>(R.id.editTextNumber)
-        val num2 = findViewById<EditText>(R.id.editTextNumber2)
+        val txtnum1 = findViewById<EditText>(R.id.editTextNumber)
+        val txtnum2 = findViewById<EditText>(R.id.editTextNumber2)
         val btnAdd = findViewById<Button>(R.id.plus_button)
         val btnSubtract = findViewById<Button>(R.id.minus_button)
         val btnMultiply = findViewById<Button>(R.id.times_button)
@@ -33,45 +34,56 @@ class MainActivity : ComponentActivity() {
         val btnClear = findViewById<Button>(R.id.clear_button)
         val answer = findViewById<TextView>(R.id.textViewAnswer)
         val btnHistory = findViewById<Button>(R.id.buttonHistory)
-        val intent= Intent(packageContext = th
+
+        //intent itutuloy
+        btnHistory.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+        }
 
 
         btnAdd.setOnClickListener {
-            CalcModel.num1 = num1.text.toString().toDoubleOrNull() ?: 0.0
-            CalcModel.num2 = num2.text.toString().toDoubleOrNull() ?: 0.0
+            CalculatorModel.num1 = txtnum1.text.toString().toDoubleOrNull() ?: 0.0
+            CalculatorModel.num2 = txtnum2.text.toString().toDoubleOrNull() ?: 0.0
             //use the model
-            val result= CalcModel.add().toString()
+            val result= CalculatorModel.add().toString()
             //print answer to UI TextView
             answer.text= "Answer: $result"
+            CalculatorModel.addHistory(calculation = "${txtnum1.toString()} + ${txtnum2.toString()} = ${result}")
+
+
         }
         btnSubtract.setOnClickListener {
-            CalcModel.num1 = num1.text.toString().toDoubleOrNull() ?: 0.0
-            CalcModel.num2 = num2.text.toString().toDoubleOrNull() ?: 0.0
+            CalculatorModel.num1 = txtnum1.text.toString().toDoubleOrNull() ?: 0.0
+            CalculatorModel.num2 = txtnum2.text.toString().toDoubleOrNull() ?: 0.0
             //use the model
-            val result= CalcModel.subtract().toString()
+            val result= CalculatorModel.subtract().toString()
             //print answer to UI TextView
             answer.text= "Answer: $result"
+            CalculatorModel.addHistory(calculation = "${txtnum1.text.toString()} - ${txtnum2.text.toString()} = ${result}")
         }
         btnMultiply.setOnClickListener {
-            CalcModel.num1 = num1.text.toString().toDoubleOrNull() ?: 0.0
-            CalcModel.num2 = num2.text.toString().toDoubleOrNull() ?: 0.0
+            CalculatorModel.num1 = txtnum1.text.toString().toDoubleOrNull() ?: 0.0
+            CalculatorModel.num2 = txtnum2.text.toString().toDoubleOrNull() ?: 0.0
             //use the model
-            val result= CalcModel.multiply().toString()
+            val result= CalculatorModel.multiply().toString()
             //print answer to UI TextView
             answer.text= "Answer: $result"
+            CalculatorModel.addHistory(calculation = "${txtnum1.text.toString()} * ${txtnum2.text.toString()} = ${result}")
         }
         btnDivide.setOnClickListener {
-            CalcModel.num1 = num1.text.toString().toDoubleOrNull() ?: 0.0
-            CalcModel.num2 = num2.text.toString().toDoubleOrNull() ?: 0.0
+            CalculatorModel.num1 = txtnum1.text.toString().toDoubleOrNull() ?: 0.0
+            CalculatorModel.num2 = txtnum2.text.toString().toDoubleOrNull() ?: 0.0
             //use the model
-            val result= CalcModel.divide().toString()
+            val result= CalculatorModel.divide().toString()
             //print answer to UI TextView
             answer.text= "Answer: $result"
+            CalculatorModel.addHistory(calculation = "${txtnum1.text.toString()} / ${txtnum2.text.toString()} = ${result}")
         }
         btnClear.setOnClickListener {
             answer.text= " 0.0"
-            num1.text.clear()
-            num2.text.clear()
+            txtnum1.text.clear()
+            txtnum2.text.clear()
         }
 
     }

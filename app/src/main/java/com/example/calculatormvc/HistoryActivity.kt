@@ -1,77 +1,37 @@
 package com.example.calculatormvc
 
 import Models.CalculatorModel
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.calculatormvc.ui.theme.CalculatorMVCTheme
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class HistoryActivity : ComponentActivity() {
-    private val CalcModel = CalculatorModel()
+    private lateinit var adapter: ArrayAdapter<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_history)
-        //get input from UI
-        val num1 = findViewById<EditText>(R.id.editTextNumber)
-        val num2 = findViewById<EditText>(R.id.editTextNumber2)
-        val btnAdd = findViewById<Button>(R.id.plus_button)
-        val btnSubtract = findViewById<Button>(R.id.minus_button)
-        val btnMultiply = findViewById<Button>(R.id.times_button)
-        val btnDivide = findViewById<Button>(R.id.divide_button)
-        val btnClear = findViewById<Button>(R.id.clear_button)
-        val answer = findViewById<TextView>(R.id.textViewAnswer)
 
+        val btnHistory = findViewById<Button>(R.id.btn_calculator)
+        val listViewHistory = findViewById<ListView>(R.id.listViewHistory)
+        //intent itutuloy
+        btnHistory.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, CalculatorModel.getHistory())
+        listViewHistory.adapter = adapter
 
-
-        btnAdd.setOnClickListener {
-            CalcModel.num1 = num1.text.toString().toDoubleOrNull() ?: 0.0
-            CalcModel.num2 = num2.text.toString().toDoubleOrNull() ?: 0.0
-            //use the model
-            val result= CalcModel.add().toString()
-            //print answer to UI TextView
-            answer.text= "Answer: $result"
+        listViewHistory.setOnItemLongClickListener { _, _, position, _ ->
+            CalculatorModel.deleteHistory(position)
+            adapter.notifyDataSetChanged()
+            true
         }
-        btnSubtract.setOnClickListener {
-            CalcModel.num1 = num1.text.toString().toDoubleOrNull() ?: 0.0
-            CalcModel.num2 = num2.text.toString().toDoubleOrNull() ?: 0.0
-            //use the model
-            val result= CalcModel.subtract().toString()
-            //print answer to UI TextView
-            answer.text= "Answer: $result"
-        }
-        btnMultiply.setOnClickListener {
-            CalcModel.num1 = num1.text.toString().toDoubleOrNull() ?: 0.0
-            CalcModel.num2 = num2.text.toString().toDoubleOrNull() ?: 0.0
-            //use the model
-            val result= CalcModel.multiply().toString()
-            //print answer to UI TextView
-            answer.text= "Answer: $result"
-        }
-        btnDivide.setOnClickListener {
-            CalcModel.num1 = num1.text.toString().toDoubleOrNull() ?: 0.0
-            CalcModel.num2 = num2.text.toString().toDoubleOrNull() ?: 0.0
-            //use the model
-            val result= CalcModel.divide().toString()
-            //print answer to UI TextView
-            answer.text= "Answer: $result"
-        }
-        btnClear.setOnClickListener {
-            answer.text= " 0.0"
-            num1.text.clear()
-            num2.text.clear()
-        }
+    }
 
     }
-}

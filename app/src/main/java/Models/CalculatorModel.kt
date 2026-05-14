@@ -1,6 +1,6 @@
 package Models
 
-class CalculatorModel {
+object CalculatorModel {
   private val history= mutableListOf<String>()
 
   fun addHistory(calculation: String){

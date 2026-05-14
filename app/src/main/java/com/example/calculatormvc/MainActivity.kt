@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
             val result= CalculatorModel.add().toString()
             //print answer to UI TextView
             answer.text= "Answer: $result"
-            CalculatorModel.addHistory(calculation = "${txtnum1.toString()} + ${txtnum2.toString()} = ${result}")
+            CalculatorModel.addHistory(calculation = "${txtnum1.text.toString()} + ${txtnum2.text.toString()} = ${result}")
 
 
         }
